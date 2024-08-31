@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Independent Contractor Revenue Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+            border-radius: 5px;
+            font-size: 18px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Independent Contractor Revenue Calculator</h1>
+
+    <div class="calculator">
+        <form id="contractorCalculator">
+            <label for="totalRevenue">Total Revenue Generated ($):</label>
+            <input type="number" id="totalRevenue" name="totalRevenue" placeholder="Enter total revenue">
+
+            <label for="contractorPercentage">Contractor's Percentage (%):</label>
+            <input type="number" id="contractorPercentage" name="contractorPercentage" placeholder="Enter contractor percentage">
+
+            <label for="bonusAmount">Bonus Amount ($):</label>
+            <input type="number" id="bonusAmount" name="bonusAmount" placeholder="Enter bonus amount (if any)">
+
+            <label for="workingHours">Total Hours Worked:</label>
+            <input type="number" id="workingHours" name="workingHours" placeholder="Enter total hours worked">
+
+            <button type="button" onclick="calculateContractorRevenue()">Calculate</button>
+        </form>
+    </div>
+
+    <div id="result">
+        <p id="contractorEarnings"></p>
+        <p id="clinicRevenue"></p>
+        <p id="hourlyEarnings"></p>
+        <p id="equivalentWage"></p>
+    </div>
+
+    <script>
+    function calculateContractorRevenue() {
+        const totalRevenue = parseFloat(document.getElementById('totalRevenue').value) || 0;
+        const contractorPercentage = parseFloat(document.getElementById('contractorPercentage').value) / 100 || 0;
+        const bonusAmount = parseFloat(document.getElementById('bonusAmount').value) || 0;
+        const workingHours = parseFloat(document.getElementById('workingHours').value) || 0;
+
+        if (totalRevenue <= 0 || contractorPercentage <= 0 || workingHours <= 0) {
+            alert("Please enter valid values for all fields.");
+            return;
+        }
+
+        // Calculate contractor's earnings
+        const contractorEarnings = (totalRevenue * contractorPercentage) + bonusAmount;
+
+        // Calculate clinic's revenue after paying the contractor
+        const clinicRevenue = totalRevenue - contractorEarnings;
+
+        // Calculate contractor's per-hour earnings
+        const hourlyEarnings = contractorEarnings / workingHours;
+
+        // Calculate the equivalent hourly wage
+        const equivalentWage = hourlyEarnings;
+
+        // Display the results
+        document.getElementById('contractorEarnings').innerText = `Contractor's Earnings (including bonus): $${contractorEarnings.toFixed(2)}`;
+        document.getElementById('clinicRevenue').innerText = `Clinic's Revenue After Payment: $${clinicRevenue.toFixed(2)}`;
+        document.getElementById('hourlyEarnings').innerText = `Contractor's Per-Hour Earnings: $${hourlyEarnings.toFixed(2)}`;
+        document.getElementById('equivalentWage').innerText = `Equivalent Hourly Wage: $${equivalentWage.toFixed(2)}`;
+
+        document.getElementById('result').style.display = 'block';
+    }
+    </script>
+
+</body>
+</html>
